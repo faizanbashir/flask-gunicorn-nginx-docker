@@ -1,0 +1,11 @@
+# ignore .git, IDE and .cache folders
+.git
+.cache
+.sonarlint
+.vscode
+
+# ignore MD files
+*.md
+
+# ignore dockerignore
+.dockerignore
