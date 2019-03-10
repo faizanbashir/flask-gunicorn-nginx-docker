@@ -6,7 +6,7 @@ WORKDIR /var/www/
 
 ADD app/requirements.txt /var/www/requirements.txt
 RUN pip install -r requirements.txt
-RUN pip install uwsgi
+RUN pip install gunicorn
 
 ADD . /var/www
 
