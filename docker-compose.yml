@@ -6,8 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: python
-    image: faizanbashir/python:3.6
+    container_name: flask
+    image: faizanbashir/flask-python:3.6
     restart: unless-stopped
     tty: true
     environment:
