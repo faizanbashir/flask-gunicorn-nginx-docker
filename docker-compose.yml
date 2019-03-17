@@ -4,7 +4,7 @@ services:
   #Flask App Container
   python:
     build:
-      context: .
+      context: app
       dockerfile: Dockerfile
     container_name: flask
     image: faizanbashir/flask-python:3.6
