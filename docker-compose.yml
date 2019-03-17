@@ -16,7 +16,7 @@ services:
       APP_PORT: 5000
       MONGODB_DATABASE: flaskdb
     volumes:
-      - ./app:/var/www
+      - appdata:/var/www
     depends_on:
       - mongodb
     networks:
@@ -58,8 +58,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - nginxdata:/etc/nginx
     networks:
       - app-network
 
@@ -71,4 +70,8 @@ networks:
 #Volumes
 volumes:
   mongodbdata:
+    driver: local
+  appdata:
+    driver: local
+  nginxdata:
     driver: local
