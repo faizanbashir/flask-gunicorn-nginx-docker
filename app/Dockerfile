@@ -7,7 +7,7 @@ ENV GROUP_ID=1000 \
 
 WORKDIR /var/www/
 
-ADD app/requirements.txt /var/www/requirements.txt
+ADD . /var/www/
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
@@ -15,16 +15,8 @@ RUN pip install gunicorn
 RUN addgroup -g $GROUP_ID www
 RUN adduser -D -u $USER_ID -G www www -s /bin/sh
 
-# Copy existing application directory contents
-#COPY . /var/www
-
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www
-
 # Change current user to www
 USER www
-
-#ADD . /var/www
 
 EXPOSE 5000
 
