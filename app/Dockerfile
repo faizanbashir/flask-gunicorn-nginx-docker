@@ -11,7 +11,7 @@ ADD . /var/www/
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
-# Add user for laravel application
+# Add user for flask application
 RUN addgroup -g $GROUP_ID www
 RUN adduser -D -u $USER_ID -G www www -s /bin/sh
 
