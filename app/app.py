@@ -5,7 +5,7 @@ from pymongo import MongoClient
 application = Flask(__name__)
 
 client = MongoClient(
-    'mongodb://' os.environ['MONGODB_USERNAME'] + ':' + os.environ['MONGODB_PASSWORD'] + '@mongodb:27017/' + os.environ['MONGODB_DATABASE'],
+    'mongodb://' + os.environ['MONGODB_USERNAME'] + ':' + os.environ['MONGODB_PASSWORD'] + '@mongodb:27017/' + os.environ['MONGODB_DATABASE'],
     27017)
 db = client.mintmesh
 
