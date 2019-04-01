@@ -1,31 +1,51 @@
 import os
-from flask import Flask, redirect, url_for, request, render_template
-from pymongo import MongoClient
+from flask import Flask, request, jsonify
+from flask_pymongo import PyMongo
 
 application = Flask(__name__)
 
-client = MongoClient(
-    'mongodb://' + os.environ['MONGODB_USERNAME'] + ':' + os.environ['MONGODB_PASSWORD'] + '@mongodb:27017/' + os.environ['MONGODB_DATABASE'],
-    27017)
-db = client.mintmesh
+application.config["MONGO_URI"] = 'mongodb://' + os.environ['MONGODB_USERNAME'] + ':' + os.environ['MONGODB_PASSWORD'] + '@' + os.environ['MONGODB_HOSTNAME'] + ':27017/' + os.environ['MONGODB_DATABASE']
+
+mongo = PyMongo(application)
+db = mongo.db
 
 @application.route('/')
+def index():
+    return jsonify(
+        status=True,
+        message='Welcome to the Dockerized Flask MongoDB app!'
+    )
+
+@application.route('/todo')
 def todo():
-    _items = db.tododb.find()
-    items = [item for item in _items]
+    _todos = db.todo.find()
 
-    return render_template('index.html', items=items)
+    item = {}
+    data = []
+    for todo in _todos:
+        item = {
+            'id': str(todo['_id']),
+            'todo': todo['todo']
+        }
+        data.append(item)
 
-@application.route('/new', methods=['POST'])
-def new():
+    return jsonify(
+        status=True,
+        data=data
+    )
 
-    item_doc = {
-        'name': request.form['name'],
-        'description': request.form['description']
+@application.route('/todo', methods=['POST'])
+def createTodo():
+    data = request.get_json(force=True)
+    item = {
+        'todo': data['todo']
     }
-    db.tododb.insert_one(item_doc)
+    db.todo.insert_one(item)
 
-    return redirect(url_for('todo'))
+    return jsonify(
+        status=True,
+        message='Todo saved successfully!'
+    ), 201
 
 if __name__ == "__main__":
     ENVIRONMENT_DEBUG = os.environ.get("APP_DEBUG", True)
