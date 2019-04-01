@@ -6,6 +6,7 @@ RUN apk --update add nginx && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
     mkdir /etc/nginx/sites-enabled/ && \
     mkdir -p /etc/letsencrypt/webrootauth && \
+    mkdir -p /run/nginx && \
     rm -rf /var/www/* && \
     rm -rf /etc/nginx/conf.d/default.conf && \
     touch /var/www/favicon.ico && \
